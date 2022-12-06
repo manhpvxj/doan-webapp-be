@@ -1,5 +1,6 @@
 package com.webapp.doan.controller;
 
+import com.webapp.doan.dto.LoginDto;
 import com.webapp.doan.model.Account;
 import com.webapp.doan.service.AccountService;
 import io.github.cdimascio.dotenv.Dotenv;
@@ -10,7 +11,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.text.ParseException;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -26,11 +26,9 @@ public class AccountController {
     }
 
     @PostMapping("/login")
-    public ResponseEntity<Map<String, String>> loginUser(String username, String password) {
-        Account acc = accountService.loginUser(username, password);
-
+    public ResponseEntity<Map<String, String>> loginUser(@RequestBody LoginDto loginDto) {
+        Account acc = accountService.loginUser(loginDto.getUsername(), loginDto.getPassword());
         return new ResponseEntity<>(generateJWTToken(acc), HttpStatus.OK);
-
     }
 
     @PostMapping("/register")

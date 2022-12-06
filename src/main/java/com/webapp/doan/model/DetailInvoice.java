@@ -1,6 +1,5 @@
 package com.webapp.doan.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -18,7 +17,7 @@ public class DetailInvoice {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name="id")
-    private Integer detailInvoiceId;
+    private Integer id;
 
     @ManyToOne(fetch = FetchType.LAZY)
     private Invoice invoiceId;

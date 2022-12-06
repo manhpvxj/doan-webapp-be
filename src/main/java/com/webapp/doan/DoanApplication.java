@@ -25,6 +25,7 @@ public class DoanApplication {
         CorsConfiguration config = new CorsConfiguration();
         config.addAllowedOrigin("*");
         config.addAllowedHeader("*");
+        config.addAllowedMethod("*");
         source.registerCorsConfiguration("/**", config);
         registrationBean.setFilter(new CorsFilter(source));
         registrationBean.setOrder(Ordered.HIGHEST_PRECEDENCE);

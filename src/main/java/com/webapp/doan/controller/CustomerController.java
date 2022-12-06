@@ -5,16 +5,15 @@ import com.webapp.doan.model.Product;
 import com.webapp.doan.service.CategoryService;
 import com.webapp.doan.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("api/customer")
@@ -26,12 +25,32 @@ public class CustomerController {
     CategoryService categoryService;
 
     @GetMapping("/products")
-    public ResponseEntity<Map<String, List<Product>>> getAllProducts() {
-        List<Product> products = productService.findAllProducts();
-        Map<String, List<Product>> map = new HashMap<String, List<Product>>();
-        map.put("data", products);
-        return new ResponseEntity<>(map, HttpStatus.OK);
+    public ResponseEntity<Map<String, List<Product>>> getAllProducts(
+            @RequestParam(name = "category", required = false) Integer categoryId,
+            @RequestParam(name = "search", required = false) String search,
+            @RequestParam(name = "page", defaultValue = "0") int page,
+            @RequestParam(name = "size", defaultValue = "12") int size) {
+        if(categoryId == null && search == null) {
+            Page<Product> products = productService.findAllProducts(page, size);
+            List<Product> listProducts = products.getContent();
+            Map<String, List<Product>> map = new HashMap<String, List<Product>>();
+            map.put("data", listProducts);
+            return new ResponseEntity<>(map, HttpStatus.OK);
+        }
+        else if(categoryId != null && search == null) {
+            List<Product> products = productService.findProductsByBrand(categoryId);
+            Map<String, List<Product>> map = new HashMap<String, List<Product>>();
+            map.put("data", products);
+            return new ResponseEntity<>(map, HttpStatus.OK);
+        }
+        else {
+            List<Product> products = productService.findProductsByName(search);
+            Map<String, List<Product>> map = new HashMap<String, List<Product>>();
+            map.put("data", products);
+            return new ResponseEntity<>(map, HttpStatus.OK);
+        }
     }
+
 
     @GetMapping("/products/{id}")
     public ResponseEntity<Map<String, Product>> FindById(@PathVariable("id") Integer id) {

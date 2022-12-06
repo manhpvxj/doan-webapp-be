@@ -19,7 +19,7 @@ public class Invoice {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id")
-    private Integer invoiceId;
+    private Integer id;
 
     @Column(name = "createAt")
     private Date createAt;
@@ -34,6 +34,6 @@ public class Invoice {
     private String address;
 
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
-    @JoinColumn(name = "invoiceId")
+    @JoinColumn(name = "id")
     private Collection<DetailInvoice> detailInvoice;
 }

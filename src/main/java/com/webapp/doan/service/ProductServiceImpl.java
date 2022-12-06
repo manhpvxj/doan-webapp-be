@@ -5,6 +5,9 @@ import com.webapp.doan.exceptions.EtResourceNotFoundException;
 import com.webapp.doan.model.Product;
 import com.webapp.doan.repository.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 
@@ -21,9 +24,9 @@ public class ProductServiceImpl implements ProductService{
     }
 
     @Override
-    public List<Product> findAllProducts() {
-
-        return productRepo.findAll();
+    public Page<Product> findAllProducts(int page, int size) {
+        Pageable pageRender = PageRequest.of(page, size);
+        return productRepo.findAll(pageRender);
     }
 
     @Override
@@ -33,13 +36,13 @@ public class ProductServiceImpl implements ProductService{
     }
 
     @Override
-    public Iterable<Product> findProductByBrand(String brand) throws EtResourceNotFoundException {
-        return productRepo.findByCategory(brand);
+    public List<Product> findProductsByBrand(Integer brandId) throws EtResourceNotFoundException {
+        return productRepo.findByCategory_Id(brandId);
     }
 
     @Override
-    public Iterable<Product> findProductByName(String name, int page, int size) throws EtResourceNotFoundException {
-        return null;
+    public List<Product> findProductsByName(String name) throws EtResourceNotFoundException {
+        return productRepo.findAllByName(name);
     }
 
     @Override
@@ -58,6 +61,6 @@ public class ProductServiceImpl implements ProductService{
         }
         productRepo.save(product);
 
-        return product.getProductId();
+        return product.getId();
     }
 }

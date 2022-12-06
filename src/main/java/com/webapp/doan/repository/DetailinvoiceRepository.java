@@ -1,4 +1,10 @@
 package com.webapp.doan.repository;
 
-public interface DetailinvoiceRepository {
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
+
+import com.webapp.doan.model.DetailInvoice;
+
+@Repository
+public interface DetailinvoiceRepository extends JpaRepository<DetailInvoice, Integer> {
 }

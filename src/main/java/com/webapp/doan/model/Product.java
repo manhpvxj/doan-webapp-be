@@ -19,7 +19,7 @@ public class Product {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name="id")
-    private Integer productId;
+    private Integer id;
 
     @Column(name = "name")
     private String name;
@@ -37,7 +37,7 @@ public class Product {
     private List<String> image;
 
     @OneToOne
-    @JoinColumn(name = "categoryId")
+    @JoinColumn(name = "category_id")
     private Category category;
 
 
