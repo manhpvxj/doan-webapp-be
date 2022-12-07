@@ -30,21 +30,15 @@ public class CustomerController {
             @RequestParam(name = "search", required = false) String search,
             @RequestParam(name = "page", defaultValue = "0") int page,
             @RequestParam(name = "size", defaultValue = "12") int size) {
-        if(categoryId == null && search == null) {
+        if(categoryId == -1 && search == "") {
             Page<Product> products = productService.findAllProducts(page, size);
             List<Product> listProducts = products.getContent();
             Map<String, List<Product>> map = new HashMap<String, List<Product>>();
             map.put("data", listProducts);
             return new ResponseEntity<>(map, HttpStatus.OK);
         }
-        else if(categoryId != null && search == null) {
-            List<Product> products = productService.findProductsByBrand(categoryId);
-            Map<String, List<Product>> map = new HashMap<String, List<Product>>();
-            map.put("data", products);
-            return new ResponseEntity<>(map, HttpStatus.OK);
-        }
         else {
-            List<Product> products = productService.findProductsByName(search);
+            List<Product> products = productService.findProductsByBrandAndName( categoryId, search);
             Map<String, List<Product>> map = new HashMap<String, List<Product>>();
             map.put("data", products);
             return new ResponseEntity<>(map, HttpStatus.OK);

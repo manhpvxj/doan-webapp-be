@@ -40,6 +40,10 @@ public class ProductServiceImpl implements ProductService{
         return productRepo.findByCategory_Id(brandId);
     }
 
+    public List<Product> findProductsByBrandAndName(Integer brandId, String name) throws EtResourceNotFoundException {
+        return productRepo.findAllByCategory_IdAndName(brandId, name);
+    }
+
     @Override
     public List<Product> findProductsByName(String name) throws EtResourceNotFoundException {
         return productRepo.findAllByName(name);

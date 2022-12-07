@@ -8,12 +8,14 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.jpa.repository.Query;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface ProductService {
     public Product createProduct(Product product) throws EtBadRequestException;
     public Page<Product> findAllProducts(int page, int size) throws EtResourceNotFoundException;
     public Product findProductById(Integer id) throws EtResourceNotFoundException;
     public List<Product> findProductsByBrand(Integer brandId) throws EtResourceNotFoundException;
+    public List<Product> findProductsByBrandAndName(Integer brandId, String name) throws EtResourceNotFoundException;
     public List<Product> findProductsByName(String name) throws EtResourceNotFoundException;
     public Integer deleteProductById(Integer id) throws EtAuthException;
     public Integer updateProductById(Product product, Integer id) throws EtAuthException;
