@@ -1,5 +1,7 @@
 package com.webapp.doan.controller;
 
+import com.webapp.doan.dto.ProductDto;
+import com.webapp.doan.model.Category;
 import com.webapp.doan.model.Product;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -17,9 +19,8 @@ import java.util.Map;
 public class ProductController {
     @Autowired
     ProductService productService;
-
     @PostMapping("/create")
-    public ResponseEntity<Map<String, Product>> CreateProduct(Product payload) {
+    public ResponseEntity<Map<String, Product>> CreateProduct(@ModelAttribute ProductDto payload) {
         Product product = productService.createProduct(payload);
         Map<String, Product> map = new HashMap<>();
         map.put("data", product);

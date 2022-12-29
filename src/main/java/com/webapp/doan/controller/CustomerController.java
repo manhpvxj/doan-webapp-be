@@ -1,5 +1,6 @@
 package com.webapp.doan.controller;
 
+import com.webapp.doan.dto.PageDto;
 import com.webapp.doan.model.Category;
 import com.webapp.doan.model.Product;
 import com.webapp.doan.service.CategoryService;
@@ -23,24 +24,34 @@ public class CustomerController {
 
     @Autowired
     CategoryService categoryService;
-
     @GetMapping("/products")
-    public ResponseEntity<Map<String, List<Product>>> getAllProducts(
+    public ResponseEntity<Map<String, Object>> getAllProducts(
             @RequestParam(name = "category", required = false) Integer categoryId,
             @RequestParam(name = "search", required = false) String search,
-            @RequestParam(name = "page", defaultValue = "0") int page,
-            @RequestParam(name = "size", defaultValue = "12") int size) {
+            @RequestParam(name = "page", defaultValue = "1") int page,
+            @RequestParam(name = "size", defaultValue = "8") int size) {
+        List<Product> allProducts = productService.findAllProducts();
+        PageDto pageDto = new PageDto(allProducts.size(), page, size);
         if(categoryId == -1 && search == "") {
-            Page<Product> products = productService.findAllProducts(page, size);
+            Page<Product> products = productService.findAllProductsByPage(page, size);
             List<Product> listProducts = products.getContent();
-            Map<String, List<Product>> map = new HashMap<String, List<Product>>();
+            Map<String, Object> map = new HashMap<String, Object>();
             map.put("data", listProducts);
+            map.put("total", pageDto);
+            return new ResponseEntity<>(map, HttpStatus.OK);
+        }
+        if (categoryId == -1 && search != "") {
+            List<Product> products = productService.findProductsByName(search);
+            Map<String, Object> map = new HashMap<String, Object>();
+            map.put("data", products);
+            map.put("total", pageDto);
             return new ResponseEntity<>(map, HttpStatus.OK);
         }
         else {
             List<Product> products = productService.findProductsByBrandAndName( categoryId, search);
-            Map<String, List<Product>> map = new HashMap<String, List<Product>>();
+            Map<String, Object> map = new HashMap<String, Object>();
             map.put("data", products);
+            map.put("total", pageDto);
             return new ResponseEntity<>(map, HttpStatus.OK);
         }
     }
