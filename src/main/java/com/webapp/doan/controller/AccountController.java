@@ -33,7 +33,6 @@ public class AccountController {
 
     @PostMapping("/register")
     public ResponseEntity<Map<String, Account>> RegisterAccount(Account payload) {
-        System.out.print(payload);
         Map<String, Account> map = new HashMap<>();
         Account account = accountService.registerUser(payload);
         map.put("data", account);

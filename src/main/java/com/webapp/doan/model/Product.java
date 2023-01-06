@@ -33,13 +33,15 @@ public class Product {
     @Column(name = "description")
     private String description;
 
+    @Column(name = "cover")
+    private String cover;
+
     @ElementCollection
-    private List<String> image;
+    private List<String> images;
 
     @OneToOne
     @JoinColumn(name = "category_id")
     private Category category;
-
 
 
 }

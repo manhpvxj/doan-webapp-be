@@ -6,12 +6,12 @@ import java.util.List;
 
 @Data
 public class ProductDto {
-    Integer id;
     String name;
     String description;
     Integer priceSell;
     Integer quantity;
-    List<String> image;
+    String cover;
+    List<String> images;
     Integer categoryId;
 
 }

@@ -34,12 +34,12 @@ public class ProductServiceImpl implements ProductService{
            throw new EtBadRequestException("Invalid information");
         }
         Product product = new Product();
-        product.setId(productDto.getId());
         product.setName(productDto.getName());
         product.setDescription(productDto.getDescription());
         product.setPriceSell(productDto.getPriceSell());
         product.setQuantity(productDto.getQuantity());
-        product.setImage(productDto.getImage());
+        product.setImages(productDto.getImages());
+        product.setCover(productDto.getCover());
         product.setCategory(category.get());
         return productRepo.save(product);
     }

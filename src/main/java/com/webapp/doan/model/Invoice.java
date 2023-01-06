@@ -2,7 +2,9 @@ package com.webapp.doan.model;
 
 import java.util.Collection;
 import java.util.Date;
+import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -22,10 +24,13 @@ public class Invoice {
     private Integer id;
 
     @Column(name = "createAt")
-    private Date createAt;
+    private String createAt;
 
     @Column(name = "totalPrice")
     private Long totalPrice;
+
+    @Column(name = "fullName")
+    private String fullName;
 
     @Column(name = "phoneNumber")
     private String phoneNumber;
@@ -33,7 +38,11 @@ public class Invoice {
     @Column(name = "address")
     private String address;
 
-    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
-    @JoinColumn(name = "id")
-    private Collection<DetailInvoice> detailInvoice;
+    @Column(name = "status")
+    private String status;
+
+    @JsonIgnore
+    @OneToMany(fetch=FetchType.LAZY, cascade = CascadeType.ALL)
+    @JoinColumn(name = "invoice_id")
+    private List<DetailInvoice> detailInvoices;
 }
