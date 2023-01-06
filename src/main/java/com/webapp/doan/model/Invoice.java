@@ -29,6 +29,9 @@ public class Invoice {
     @Column(name = "totalPrice")
     private Long totalPrice;
 
+    @Column(name = "updateAt")
+    private String updateAt;
+
     @Column(name = "fullName")
     private String fullName;
 

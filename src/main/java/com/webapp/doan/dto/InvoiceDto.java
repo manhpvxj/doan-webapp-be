@@ -6,9 +6,10 @@ import java.util.List;
 
 @Data
 public class InvoiceDto {
-    Integer id;
 
     String createdAt;
+
+    String updatedAt;
 
     Long totalPrice;
 

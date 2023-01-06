@@ -15,7 +15,9 @@ public interface InvoiceService {
 
     public Invoice createInvoice(InvoiceDto invoiceDto) throws EtBadRequestException;
 
-    public Page<Invoice> findAllInvoices(int page, int size) throws EtResourceNotFoundException;
+    public Page<Invoice> findAllInvoicesByPage(int page, int size) throws EtResourceNotFoundException;
+
+    public List<Invoice> findAllInvoices() throws EtResourceNotFoundException;
 
     public Invoice findInvoiceById(Integer id) throws  EtResourceNotFoundException;
 

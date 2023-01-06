@@ -12,6 +12,8 @@ import com.webapp.doan.repository.DetailinvoiceRepository;
 import com.webapp.doan.repository.InvoiceRepository;
 import com.webapp.doan.repository.ProductRepository;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -37,6 +39,7 @@ public class InvoiceServiceImpl implements InvoiceService {
     public Invoice createInvoice(InvoiceDto invoiceDto) throws EtBadRequestException {
         Invoice invoice = new Invoice();
         invoice.setCreateAt(invoiceDto.getCreatedAt());
+        invoice.setUpdateAt(null);
         invoice.setTotalPrice(invoiceDto.getTotalPrice());
         invoice.setFullName(invoiceDto.getFullName());
         invoice.setAddress(invoiceDto.getAddress());
@@ -65,10 +68,14 @@ public class InvoiceServiceImpl implements InvoiceService {
     }
 
     @Override
-    public Page<Invoice> findAllInvoices(int page, int size) throws EtResourceNotFoundException {
-        return null;
+    public Page<Invoice> findAllInvoicesByPage(int page, int size) throws EtResourceNotFoundException {
+        Pageable pageRender = PageRequest.of(page - 1, size);
+        return invoiceRepo.findAll(pageRender);
     }
 
+    public List<Invoice> findAllInvoices() throws EtResourceNotFoundException {
+        return invoiceRepo.findAll();
+    }
     public Invoice findInvoiceById(Integer id) throws EtResourceNotFoundException {
         return invoiceRepo.findById(id).get();
     }
