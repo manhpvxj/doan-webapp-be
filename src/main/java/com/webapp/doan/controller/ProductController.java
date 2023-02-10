@@ -24,6 +24,13 @@ public class ProductController {
         map.put("data", product);
         return new ResponseEntity<>(map, HttpStatus.OK);
     }
+    @PutMapping("/{id}/edit")
+    public ResponseEntity<Map<String, Product>> EditProduct(@RequestBody ProductDto payload, @PathVariable("id") Integer id) {
+        Product product = productService.editProductById(id, payload);
+        Map<String, Product> map = new HashMap<>();
+        map.put("data", product);
+        return new ResponseEntity<>(map, HttpStatus.OK);
+    }
     @DeleteMapping("/{id}")
     public ResponseEntity<Map<String, String>> DeleteProductById(@PathVariable("id") Integer id) {
         Integer productId = productService.deleteProductById(id);

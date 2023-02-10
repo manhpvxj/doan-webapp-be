@@ -63,7 +63,6 @@ public class InvoiceServiceImpl implements InvoiceService {
             detailInvoices.add(detailInvoice);
         });
         currInvoice.setDetailInvoices(detailInvoices);
-        System.out.println(currInvoice);
         return invoiceRepo.save(currInvoice);
     }
 

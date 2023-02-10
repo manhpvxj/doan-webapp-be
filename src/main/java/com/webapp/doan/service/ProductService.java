@@ -19,6 +19,6 @@ public interface ProductService {
     public List<Product> findProductsByBrandAndName(Integer brandId, String name) throws EtResourceNotFoundException;
     public List<Product> findProductsByName(String name) throws EtResourceNotFoundException;
     public Integer deleteProductById(Integer id) throws EtAuthException;
-    public Integer updateProductById(Product product, Integer id) throws EtAuthException;
+    public Product editProductById(Integer id, ProductDto product) throws EtAuthException;
 
 }
